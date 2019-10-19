@@ -4,12 +4,14 @@ import com.linkdin.learning.reactivespring.model.CoinBaseResponse;
 import com.linkdin.learning.reactivespring.model.Purchase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
+@Service
 public class CoinbaseServiceImpl implements CoinbaseService {
 
     @Autowired
@@ -21,7 +23,7 @@ public class CoinbaseServiceImpl implements CoinbaseService {
     @Override
     public Mono<CoinBaseResponse> getCryptoPrice(String priceName) {
         return webClient.get()
-                .uri("https://api.coinbase.com/v2/prices/{crypto/buy}", priceName)
+                .uri("https://api.coinbase.com/v2/prices/{crypto}/buy", priceName)
                 .exchange()
                 .flatMap(clientResponse -> clientResponse.bodyToMono(CoinBaseResponse.class));
     }

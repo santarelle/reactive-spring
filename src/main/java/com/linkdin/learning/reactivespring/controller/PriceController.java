@@ -1,5 +1,8 @@
 package com.linkdin.learning.reactivespring.controller;
 
+import com.linkdin.learning.reactivespring.model.CoinBaseResponse;
+import com.linkdin.learning.reactivespring.service.CoinbaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +13,12 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/coin/price/v1")
 public class PriceController {
 
-    @GetMapping(value = "/{name}")
-    // TODO: change String to Domain Model type when it's ready
-    public Mono<String> getPrice(@PathVariable String name) {
+    @Autowired
+    private CoinbaseService coinbaseService;
 
-        // TODO: use autowired service bean to get price
-        return Mono.fromSupplier(() -> "price");
+    @GetMapping(value = "/{name}")
+    public Mono<CoinBaseResponse> getPrice(@PathVariable String name) {
+
+        return coinbaseService.getCryptoPrice(name);
     }
 }
