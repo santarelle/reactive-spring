@@ -21,11 +21,17 @@ public class WebConfig implements WebFluxConfigurer {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunctionPurchase(final PurchaseHandler handler){
+    public RouterFunction<ServerResponse> routerFunctionPurchase(final PurchaseHandler handler) {
         return RouterFunctions.route(
                 RequestPredicates.GET("/coin/purchase/v1/{id}")
-                    .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
+                        .and(RequestPredicates.accept(MediaType.APPLICATION_JSON)),
                 handler::listPurchases
         );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> routerFunctionAllPurchases(final PurchaseHandler handler) {
+        return RouterFunctions
+                .route(RequestPredicates.GET("/coin/purchase/v1"), handler::listAllPurchases);
     }
 }
