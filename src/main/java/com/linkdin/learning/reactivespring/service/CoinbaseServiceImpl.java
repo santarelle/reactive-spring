@@ -5,6 +5,7 @@ import com.linkdin.learning.reactivespring.model.Purchase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -35,5 +36,15 @@ public class CoinbaseServiceImpl implements CoinbaseService {
                                 LocalDateTime.now()
                         )
                 ));
+    }
+
+    @Override
+    public Mono<Purchase> getPurchaseById(String id) {
+        return reactiveMongoTemplate.findById(id, Purchase.class);
+    }
+
+    @Override
+    public Flux<Purchase> listAllPurchases() {
+        return reactiveMongoTemplate.findAll(Purchase.class);
     }
 }
