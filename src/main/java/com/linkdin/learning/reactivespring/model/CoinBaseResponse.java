@@ -4,7 +4,7 @@ public class CoinBaseResponse {
 
     private Data data;
 
-    static class Data {
+    public static class Data {
         private String base;
         private String currency;
         private String amount;
